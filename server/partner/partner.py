@@ -1,0 +1,2 @@
+class Partner:
+    pass
