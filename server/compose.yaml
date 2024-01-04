@@ -1,14 +1,13 @@
 services:
   db:
     image: postgres
-    build: ./initdb/
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgress
       - POSTGRES_DB=postgres
     volumes:
       - pgdata:/var/lib/postgresql/data
-      - ./initdb/:/var/lib/postgresql/docker-entrypoint-initdb.d/
+      - ./initdb/:/docker-entrypoint-initdb.d
   web:
     build: .
     ports:
