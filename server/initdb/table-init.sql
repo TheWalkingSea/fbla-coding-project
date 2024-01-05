@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS partner_tag
     tagcolor VARCHAR(6)
 );
 
-CREATE TABLE IF NOT EXISTS organization
+CREATE TABLE IF NOT EXISTS organization_tag
 (
     organization_pk UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
     tagname TEXT,
