@@ -29,11 +29,25 @@ class PkAdapter(DatabaseAdapter):
         self.execute_query("DELETE FROM %s WHERE %s_pk=%s", (self.table, self.table, self.pk))
     
     def updateRecord(self, fieldName: str, value: Any) -> None:
-        """ Updates a record with a new value. This only updates one value """
+        """ Updates a record with a new value. This only updates one value 
+        
+        Parameters:
+        (str)fieldName: The column which determines the cell to update the value with
+        (Any)value: The value to update the cell with
+
+        """
         self.execute_query("UPDATE %s SET %s=%s WHERE %s_pk=%s", (self.table, fieldName, value, self.table))
     
-    def updateMultipleRecordValues(self, list)
-
+    def updateMultipleRecordValues(self, data: list[tuple]) -> None:
+        """ Updates multiple cells with data. This function is similar to updateRecord but updates multiple values
+        
+        Parameters:
+        (list[tuple])data: A list of tuples consisting of a fieldName and a value
+        
+        """
+        for fieldName, value in data:
+            self.execute_query("UPDATE %s SET %s=%s WHERE %s_pk=%s", (self.table, fieldName, value, self.table), commit=False)
+        self.conn.commit()
 
     def createRecord(self) -> None: # Abstract method
         raise NotImplementedError

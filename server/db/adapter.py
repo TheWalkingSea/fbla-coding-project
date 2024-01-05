@@ -27,7 +27,7 @@ class DatabaseAdapter:
         """
         try:
             self.cursor.execute(query, vars=params)
-            self.conn.commit()
+            if (commit): self.conn.commit()
         except Exception as e:
             self.conn.rollback()
             logging.error("Rolling back because something went executing query; Query: %s; Params: %s; Exception: %s" % (query, params, e))
