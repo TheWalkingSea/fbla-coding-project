@@ -1,0 +1,5 @@
+2024-01-06 22:35:26 - 96:werkzeug:30 -  * Debugger is active!
+2024-01-06 22:35:26 - 96:werkzeug:20 -  * Debugger PIN: 119-753-622
+2024-01-06 22:35:32 - 35:root:20 - GET data for partner_pk: 6917ac1c-576c-4aad-9be8-1a2e65860262; {2: 3}
+2024-01-06 22:35:32 - 96:werkzeug:20 - 172.20.0.1 - - [06/Jan/2024 22:35:32] "GET /api/v1/partner/6917ac1c-576c-4aad-9be8-1a2e65860262 HTTP/1.1" 200 -
+2024-01-06 22:37:12 - 96:werkzeug:20 -  * Detected change in '/app/app.py', reloading

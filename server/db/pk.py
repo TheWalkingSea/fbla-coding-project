@@ -1,6 +1,7 @@
 import logging
 from .adapter import DatabaseAdapter
 from typing import Any
+from psycopg2 import sql
 
 logger = logging.getLogger(__name__)
 
@@ -22,11 +23,30 @@ class PkAdapter(DatabaseAdapter):
 
 
         return self.fetchone("SELECT %s FROM %s WHERE %s_pk=%s", (fieldName, self.table, self.table, self.pk))
+
+    def getFields(self) -> Any:
+        """ Gets all fields for a row
+        
+        Returns:
+        (Any): All the data in the row
+        
+        """
+        keys = self.get_column_names(self.table)
+        # values = self.fetchone(sql.SQL("SELECT * FROM {table} WHERE {tablepk}=%s").format(
+        #         table=sql.Identifier(self.table),
+        #         tablepk=sql.Identifier(self.table + "_pk")
+        #     ), (self.pk,))
+        values = [2]
+        # return dict(zip(keys, list(values)))
+        return {2: 3}
     
     def deleteRecord(self) -> None:
         """ Deletes the record with self.pk """
         logger.info("Deleting row with pk %s in table %s" % (self.pk, self.table))
-        self.execute_query("DELETE FROM %s WHERE %s_pk=%s", (self.table, self.table, self.pk))
+        self.execute_query(sql.SQL("DELETE FROM {table} WHERE {tablepk}=%s").format(
+                table=sql.Identifier(self.table), 
+                tablepk=sql.Identifier(self.table + "_pk")
+            ), (self.pk,))
     
     def updateRecord(self, fieldName: str, value: Any) -> None:
         """ Updates a record with a new value. This only updates one value 
@@ -48,10 +68,6 @@ class PkAdapter(DatabaseAdapter):
         for fieldName, value in data:
             self.execute_query("UPDATE %s SET %s=%s WHERE %s_pk=%s", (self.table, fieldName, value, self.table), commit=False)
         self.conn.commit()
-
-    def createRecord(self) -> None: # Abstract method
-        raise NotImplementedError
-    
     
 
 
