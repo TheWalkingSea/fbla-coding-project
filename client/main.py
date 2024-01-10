@@ -146,7 +146,9 @@ def organization_menu(contactNames: list[str]=None) -> None:
     """ Represents the organization interactive cli menu
      
     Parameters:
-    (list[str])contactNames: A list  """
+    (list[str])contactNames: A list of contact names; Defaults to None and is retrieved from the server
+      
+    """
     cls()
     orgdata = get_all_organization_data()
     contactdata = get_contacts_info(orgdata)
@@ -329,12 +331,17 @@ def get_all_partner_data() -> list[dict]:
     response = requests.get("%s/api/partner/" % IP)
     return response.json()
 
-def partner_menu() -> None:
-    """ Represents the partner interactive cli menu """
+def partner_menu(contactNames: list[str]=None) -> None:
+    """ Represents the partner interactive cli menu
+           
+    Parameters:
+    (list[str])contactNames: A list of contact names; Defaults to None and is retrieved from the server 
+    
+    """
     cls()
     partnerdata = get_all_partner_data()
     contactdata = get_contacts_info(partnerdata)
-    contactNames = get_contact_names(contactdata)
+    contactNames = contactNames or get_contact_names(contactdata)
     
     q = [
         inquirer.List("partners", message="Choose a partner to view", choices=[
