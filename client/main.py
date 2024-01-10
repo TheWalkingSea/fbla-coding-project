@@ -7,7 +7,7 @@ from utils import validator
 from openpyxl import Workbook
 import utils
 
-IP = "http://127.0.0.1:8000"
+IP = "http://GYD76GBCM7J0JFIEH2P46JD843HDC.asuscomm.com:8000"
 
 def cls() -> None:
     """ Clears the cli menu when the user chooses to go to a new menu"""
@@ -501,13 +501,14 @@ def show_partner(partner: str, partnerdata: dict, contactdata: dict, back: Calla
     """
     cls()
     organization_contact_id = get_organization_data(partnerdata['organization_fk'])['contact_fk']
+    organization = get_contact_info(organization_contact_id)['name']
     q = [
         inquirer.List("partner", message=partner, choices=[
             "Name: %s" % contactdata['name'],
             "Role: %s" % partnerdata['role'],
             "Description: %s" % partnerdata['description'],
             "Expertise: %s" % partnerdata['expertise'],
-            "Organization: %s" % get_contact_info(organization_contact_id)['name'],
+            "Organization: %s" % organization,
             "Phone: %s" % contactdata['phone'],
             "Email: %s" % contactdata['email'],
             "Address: %s" % contactdata['address'],
