@@ -1,3 +1,10 @@
-To execute the program, you must open the dist folder and run the main.exe program
+To execute the program, you must open the dist folder and run the main.exe program. If there are any visual bugs present when scrolling through the cli, try changing the resolution of the command prompt (Ex: fullscreen).
+ - The program is an interactive CLI. Use up and down arrows to navigate through the menu and use the ENTER key to navigate to the next page. You can select either an organization or a partner (A partner is someone who is part of an organization). 
+    - Selecting one of the two will bring a menu of a list of items with the ability to create an organization/partner and a BACK button at the bottom.
+    - You can also search/filter through items by selecting SEARCH and typing in a query. Pressing enter will filter through entries.
+    - Selecting one of the organizations/partners will bring up information stored about that entity, you can select an item to edit the item and a confirmation prompt will popup to confirm changes.
+ - You can also select to create a report.
+    - This will export the data into a file called export.xlsx with information about organizations and the partners who work at that organization.
+ - Selecting EXIT will exit the program
 
 To build the program, you must have python and pyinstaller installed. You must the execute `pip install -r requirements.txt` in the prompt in a virtual environment located at /venv to install requirements. Finally, if they are both installed, you can run build.bat and the executable will be in dist/main.exe
