@@ -1,4 +1,5 @@
 To execute the program, you must open the dist folder and run the main.exe program. If there are any visual bugs present when scrolling through the cli, try changing the resolution of the command prompt (Ex: fullscreen).
+ - WARNING: The file may be flagged as a virus by Windows Defender. This is not true and has to do with the file not being signed by Microsoft and approved. The source code is provided and instructions on how to build the file are also provided. It is also not flagged on any other major antivirus, just has to do with how Microsoft verifies files (which can cost money).
  - The program is an interactive CLI. Use up and down arrows to navigate through the menu and use the ENTER key to navigate to the next page. You can select either an organization or a partner (A partner is someone who is part of an organization). 
     - Selecting one of the two will bring a menu of a list of items with the ability to create an organization/partner and a BACK button at the bottom.
     - You can also search/filter through items by selecting SEARCH and typing in a query. Pressing enter will filter through entries.
