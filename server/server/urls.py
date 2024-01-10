@@ -16,10 +16,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from .views import default_route
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/contact/', include('contact.urls')),
     path('api/organization/', include('organization.urls')),
-    path('api/partner/', include('partner.urls'))
+    path('api/partner/', include('partner.urls')),
+    path('', default_route, name='default'),
 ]
