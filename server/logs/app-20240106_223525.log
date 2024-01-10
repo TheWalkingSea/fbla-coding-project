@@ -1,7 +1,0 @@
-2024-01-06 22:35:25 - 96:werkzeug:20 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
- * Running on all addresses (0.0.0.0)
- * Running on http://127.0.0.1:5000
- * Running on http://172.20.0.2:5000
-2024-01-06 22:35:25 - 96:werkzeug:20 - [33mPress CTRL+C to quit[0m
-2024-01-06 22:35:25 - 96:werkzeug:20 -  * Restarting with stat
-2024-01-06 22:37:12 - 96:werkzeug:20 -  * Restarting with stat
