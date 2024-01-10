@@ -5,7 +5,7 @@ import requests
 from typing import Callable
 from utils import validator
 from openpyxl import Workbook
-import re
+import utils
 
 IP = "http://127.0.0.1:8000"
 
@@ -121,18 +121,41 @@ def contact_value_menu(contact_id: int, key: str, validator: Callable=None) -> N
         update_value_contact(contact_id, key, answers['key'])
 
 
+def search_menu(filterList: list[str], callback: Callable) -> None:
+    """ Presents a search menu where the user enters a query, in which it is filtered and callback is called with the list as an argument
+    
+    Parameters:
+    (list[str])filterList: The complete list of queries that will be filtered through
+    (Callable)callback: A function with one argument being the filtered list
+    
+    """
+    q = [
+        inquirer.Text("search", "Enter A Search Query...")
+    ]
+    answers = inquirer.prompt(q)
+    answer = answers['search']
+    if (answer == ""):
+        callback(filterList)
+        return
+    filteredList = utils.search_function(answer, filterList)
+    callback(filteredList)
+
 # Organization
 
-def organization_menu() -> None:
-    """ Represents the organization interactive cli menu """
+def organization_menu(contactNames: list[str]=None) -> None:
+    """ Represents the organization interactive cli menu
+     
+    Parameters:
+    (list[str])contactNames: A list  """
     cls()
     orgdata = get_all_organization_data()
     contactdata = get_contacts_info(orgdata)
-    contactNames = get_contact_names(contactdata)
+    contactNames = contactNames or get_contact_names(contactdata)
+
     
     q = [
         inquirer.List("organizations", message="Choose an organization to view", choices=[
-            "Search"
+            "Search",
             *contactNames,
             "Create Organization...",
             "Back"
@@ -141,7 +164,7 @@ def organization_menu() -> None:
     answers = inquirer.prompt(q)
     answer = answers['organizations']
     if (answer == "Search"):
-        pass
+        search_menu(filterList=contactNames, callback=organization_menu)
     elif (answer == "Create Organization..."):
         create_organization_menu()
         organization_menu()
@@ -315,6 +338,7 @@ def partner_menu() -> None:
     
     q = [
         inquirer.List("partners", message="Choose a partner to view", choices=[
+            "Search",
             *contactNames,
             "Create Partner...",
             "Back"
@@ -322,7 +346,9 @@ def partner_menu() -> None:
     ]
     answers = inquirer.prompt(q)
     answer = answers['partners']
-    if (answer == "Create Partner..."):
+    if (answer == "Search"):
+        search_menu(filterList=contactNames, callback=partner_menu)
+    elif (answer == "Create Partner..."):
         create_partner_menu()
         partner_menu()
     elif (answer == "Back"):
@@ -565,12 +591,19 @@ def create_report() -> None:
 
 
 
-
-    wb.save("export.xlsx")
+    try:
+        wb.save("export.xlsx")
+    except PermissionError:
+        input("Something went wrong when trying to access the export file. Please delete the file and try again.")
+        sys.exit(-1)
 
 
 def main() -> None:
     """ Represents the main menu for the cli """
+    if (not utils.check_wifi(IP)):
+        input("Wifi is not available. Please connect and try again.")
+        sys.exit(-1)
+
     cls()
     q = [
         inquirer.List("main", message="Welcome to EduVision Collaborator Platform", choices=[
