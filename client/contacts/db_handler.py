@@ -1,5 +1,5 @@
 import requests # TEMP
-IP = "" # TEMP
+IP = "http://GYD76GBCM7J0JFIEH2P46JD843HDC.asuscomm.com:8000"
 
 
 def get_info(contact_pk: int) -> dict:

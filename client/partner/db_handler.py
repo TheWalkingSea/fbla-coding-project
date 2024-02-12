@@ -1,5 +1,5 @@
 import requests
-IP = ""
+IP = "http://GYD76GBCM7J0JFIEH2P46JD843HDC.asuscomm.com:8000"
 
 def get_all_data() -> list[dict]:
     """ Gets all the partner data from the db 

@@ -1,5 +1,5 @@
 import requests
-IP = ""
+IP = "http://GYD76GBCM7J0JFIEH2P46JD843HDC.asuscomm.com:8000"
 
 def create(payload: dict) -> None:
     """ Creates an organization object with a payload
