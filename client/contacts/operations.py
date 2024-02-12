@@ -27,5 +27,5 @@ def get_contacts_info(data: list) -> list:
     ret = []
     for item in data:
         fk = item['contact_fk']
-        ret.append(db_handler.get_contact_info(fk))
+        ret.append(db_handler.get_info(fk))
     return ret

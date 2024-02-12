@@ -2,7 +2,7 @@ import requests # TEMP
 IP = "" # TEMP
 
 
-def get_contact_info(contact_pk: int) -> dict:
+def get_info(contact_pk: int) -> dict:
     """ Gets contact info from a contact_fk variable to lookup in the db
     
     Parameters:
