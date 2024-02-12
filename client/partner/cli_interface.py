@@ -6,7 +6,7 @@ import contacts
 import organization
 
 
-def partners_menu(back: Callable, contactNames: list[str]=None) -> None:
+def partners_menu(contactNames: list[str]=None) -> None:
     """ Represents the partner interactive cli menu. (Shows ALL partners)
            
     Parameters:
@@ -35,7 +35,8 @@ def partners_menu(back: Callable, contactNames: list[str]=None) -> None:
         create_partners_menu()
         partners_menu()
     elif (answer == "Back"):
-        back() # Go back to main menu
+        from main import main
+        main() # Go back to main menu
     else:
         # This uses a sneaky trick with zip to make the contactNames as a key to the partner and contact data.
         # The contactName can be extracted from the prompt and we can extract the orgdata and contactdata to pass into show_partner

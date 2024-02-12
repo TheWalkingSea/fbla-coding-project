@@ -1,11 +1,12 @@
 import inquirer
 import sys
 import utils
-from utils import util
+from utils import util, report
 import organization
 import partner
 
-IP = "GYD76GBCM7J0JFIEH2P46JD843HDC.asuscomm.com"
+
+IP = "http://GYD76GBCM7J0JFIEH2P46JD843HDC.asuscomm.com:8000"
 
 def main() -> None:
     """ Represents the main menu for the cli """
@@ -28,12 +29,12 @@ def main() -> None:
     match answer:
         case "Organizations":
             util.cls()
-            organization.organization_menu(main)
+            organization.organization_menu()
         case "Partners":
             util.cls()
-            partner.partners_menu(main)
+            partner.partners_menu()
         case "Create Report":
-            util.create_report()
+            report.create_report()
             print("Report exported to export.xlsx...")
         case "Exit":
             sys.exit(0)

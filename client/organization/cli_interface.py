@@ -4,7 +4,7 @@ import inquirer
 import contacts
 from typing import Callable
 
-def organization_menu(back: Callable, contactNames: list[str]=None) -> None:
+def organization_menu(contactNames: list[str]=None) -> None:
     """ Represents the organization interactive cli menu
      
     Parameters:
@@ -34,7 +34,8 @@ def organization_menu(back: Callable, contactNames: list[str]=None) -> None:
         create_organization_menu()
         organization_menu()
     elif (answer == "Back"):
-        back() # Go back to main menu
+        from main import main
+        main() # Go back to main menu
     else:
         # This uses a sneaky trick with zip to make the contactNames as a key to the organization and contact data.
         # The contactName can be extracted from the prompt and we can extract the orgdata and contactdata to pass into show_organization
