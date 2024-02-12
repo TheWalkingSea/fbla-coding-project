@@ -1,5 +1,7 @@
+import requests
+IP = ""
 
-def create_organization(payload: dict) -> None:
+def create(payload: dict) -> None:
     """ Creates an organization object with a payload
     
     Parameters:
@@ -8,7 +10,17 @@ def create_organization(payload: dict) -> None:
     """
     requests.post("%s/api/organization/" % IP, json=payload)
 
-def get_organization_data(organization_id: int) -> dict:
+def get_all_data() -> list[dict]:
+    """ Gets all the organization data from the db 
+    
+    Returns:
+    (list[dict]): A list of organization items from the database
+    
+    """
+    response = requests.get("%s/api/organization/" % IP)
+    return response.json()
+
+def get_data(organization_id: int) -> dict:
     """ Gets all organization data for a specific id 
     
     Parameters:
@@ -21,7 +33,7 @@ def get_organization_data(organization_id: int) -> dict:
     response = requests.get("%s/api/organization/%s/" % (IP, organization_id))
     return response.json()
 
-def delete_organization(organization_id: int) -> None:
+def delete(organization_id: int) -> None:
     """ Deletes an organization from the database 
     
     Parameters:
@@ -31,7 +43,7 @@ def delete_organization(organization_id: int) -> None:
     requests.delete("%s/api/organization/%s/" % (IP, organization_id))
 
 
-def update_value_organization(organization_id: int, key: str, value: str) -> None:
+def update_value(organization_id: int, key: str, value: str) -> None:
     """ Updates a value in an organization object in the database 
     
     Parameters:
