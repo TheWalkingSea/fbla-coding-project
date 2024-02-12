@@ -5,7 +5,7 @@ from utils import util
 import organization
 import partner
 
-
+IP = "GYD76GBCM7J0JFIEH2P46JD843HDC.asuscomm.com"
 
 def main() -> None:
     """ Represents the main menu for the cli """
