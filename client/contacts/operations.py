@@ -1,6 +1,6 @@
 import requests # TEMP
 IP = "" # TEMP
-import db_handler
+from . import db_handler
 
 def get_names(data: list[dict]) -> list[str]:
     """ Extracts all the contact names from contact data
