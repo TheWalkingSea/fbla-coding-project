@@ -2,6 +2,9 @@ from utils import util, validator
 import inquirer
 import db_handler
 from typing import Callable
+import contacts
+import organization
+
 
 def partners_menu(contactNames: list[str]=None) -> None:
     """ Represents the partner interactive cli menu. (Shows ALL partners)
@@ -12,8 +15,8 @@ def partners_menu(contactNames: list[str]=None) -> None:
     """
     util.cls()
     partnerdata = db_handler.get_all_data()
-    contactdata = get_contacts_info(partnerdata)
-    contactNames = contactNames or get_contact_names(contactdata)
+    contactdata = contacts.get_contacts_info(partnerdata)
+    contactNames = contactNames or contacts.get_names(contactdata)
     
     q = [
         inquirer.List("partners", message="Choose a partner to view", choices=[
@@ -26,7 +29,7 @@ def partners_menu(contactNames: list[str]=None) -> None:
     answers = inquirer.prompt(q)
     answer = answers['partners']
     if (answer == "Search"):
-        search_menu(filterList=contactNames, callback=partners_menu)
+        util.search_menu(filterList=contactNames, callback=partners_menu)
     elif (answer == "Create Partner..."):
         create_partners_menu()
         partners_menu()
@@ -43,9 +46,9 @@ def create_partners_menu():
     """ Creates an partner with a prompt """
     util.cls()
 
-    orgdata = get_all_organization_data()
-    contactdata = get_contacts_info(orgdata)
-    contactNames = get_contact_names(contactdata) # All the names for the organizations
+    orgdata = organization.get_all_data()
+    contactdata = contacts.get_contacts_info(orgdata)
+    contactNames = contacts.get_names(contactdata) # All the names for the organizations
 
     q = [
         inquirer.Text("name", "Name", validate=lambda _, x: validator.isNotNull(x)),
@@ -71,7 +74,7 @@ def create_partners_menu():
         "email": answers['email'],
         "address": answers['address']
     }
-    contact_fk = create_contact(contact_payload)
+    contact_fk = contacts.create(contact_payload)
     partner_payload = {
         "description": answers['description'],
         "role": answers['role'],
@@ -80,16 +83,6 @@ def create_partners_menu():
         "organization_fk": organization_fk
     }
     db_handler.create(partner_payload)
-
-
-    
-
-
-
-
-    
-
-
 
 def partner_value_menu(partner_id: int, key: str, validator: Callable=None) -> None:
     """ Represents the cli menu for a value of an partner
@@ -118,9 +111,9 @@ def partner_organization_value_menu(partner_id: int) -> None:
     """
     util.cls()
 
-    orgdata = get_all_organization_data()
-    contactdata = get_contacts_info(orgdata)
-    contactNames = get_contact_names(contactdata) # All the names for the organizations
+    orgdata = organization.get_all_data()
+    contactdata = contacts.get_contacts_info(orgdata)
+    contactNames = contacts.get_names(contactdata) # All the names for the organizations
 
     q = [
         inquirer.List(name="organizations", message="Organization",
@@ -154,15 +147,15 @@ def show_partner(partner: str, partnerdata: dict, contactdata: dict, back: Calla
     
     """
     util.cls()
-    organization_contact_id = get_organization_data(partnerdata['organization_fk'])['contact_fk']
-    organization = get_contact_info(organization_contact_id)['name']
+    organization_contact_id = organization.get_data(partnerdata['organization_fk'])['contact_fk']
+    organization_name = contacts.get_info(organization_contact_id)['name']
     q = [
         inquirer.List("partner", message=partner, choices=[
             "Name: %s" % contactdata['name'],
             "Role: %s" % partnerdata['role'],
             "Description: %s" % partnerdata['description'],
             "Expertise: %s" % partnerdata['expertise'],
-            "Organization: %s" % organization,
+            "Organization: %s" % organization_name,
             "Phone: %s" % contactdata['phone'],
             "Email: %s" % contactdata['email'],
             "Address: %s" % contactdata['address'],
@@ -186,9 +179,9 @@ def show_partner(partner: str, partnerdata: dict, contactdata: dict, back: Calla
         case "Description" | "Expertise":
             partner_value_menu(partnerdata['id'], key.lower(), validator=validator.isNotNull)
         case "Name" | "Address":
-            contact_value_menu(partnerdata['contact_fk'], key.lower(), validator=validator.isNotNull)
+            contacts.value_menu(partnerdata['contact_fk'], key.lower(), validator=validator.isNotNull)
         case "Phone":
-            contact_value_menu(partnerdata['contact_fk'], key.lower(), validator=validator.validate_phone)
+            contacts.value_menu(partnerdata['contact_fk'], key.lower(), validator=validator.validate_phone)
         case "Email":
-            contact_value_menu(partnerdata['contact_fk'], key.lower(), validator=validator.validate_email)
+            contacts.value_menu(partnerdata['contact_fk'], key.lower(), validator=validator.validate_email)
     partners_menu()
