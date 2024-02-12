@@ -1,7 +1,7 @@
-from ..utils.util import cls
+from utils.util import cls
 from typing import Callable
 import inquirer
-import db_handler
+from . import db_handler
 
 def value_menu(contact_id: int, key: str, validator: Callable=None) -> None:
     """ Represents the cli menu for a value of an contact
