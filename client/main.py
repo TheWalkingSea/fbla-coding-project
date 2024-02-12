@@ -9,9 +9,7 @@ import utils
 
 IP = "http://GYD76GBCM7J0JFIEH2P46JD843HDC.asuscomm.com:8000"
 
-def cls() -> None:
-    """ Clears the cli menu when the user chooses to go to a new menu"""
-    os.system('cls' if os.name == 'nt' else 'clear')
+
 
 def get_contact_names(data: list[dict]) -> list[str]:
     """ Extracts all the contact names from contact data
