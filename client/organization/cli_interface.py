@@ -1,18 +1,21 @@
 from utils import util, validator
-import db_handler
+from . import db_handler
 import inquirer
+import contacts
+from typing import Callable
 
-def organization_menu(contactNames: list[str]=None) -> None:
+def organization_menu(back: Callable, contactNames: list[str]=None) -> None:
     """ Represents the organization interactive cli menu
      
     Parameters:
+    (Callable)back: A callback to the main function
     (list[str])contactNames: A list of contact names; Defaults to None and is retrieved from the server
       
     """
     util.cls()
     orgdata = db_handler.get_all_data()
-    contactdata = get_contacts_info(orgdata)
-    contactNames = contactNames or get_contact_names(contactdata)
+    contactdata = contacts.get_contacts_info(orgdata)
+    contactNames = contactNames or contacts.get_names(contactdata)
 
     
     q = [
@@ -26,12 +29,12 @@ def organization_menu(contactNames: list[str]=None) -> None:
     answers = inquirer.prompt(q)
     answer = answers['organizations']
     if (answer == "Search"):
-        search_menu(filterList=contactNames, callback=organization_menu)
+        util.search_menu(filterList=contactNames, callback=organization_menu)
     elif (answer == "Create Organization..."):
         create_organization_menu()
         organization_menu()
     elif (answer == "Back"):
-        main() # Go back to main menu
+        back() # Go back to main menu
     else:
         # This uses a sneaky trick with zip to make the contactNames as a key to the organization and contact data.
         # The contactName can be extracted from the prompt and we can extract the orgdata and contactdata to pass into show_organization
@@ -58,7 +61,7 @@ def create_organization_menu():
         "email": answers['email'],
         "address": answers['address']
     }
-    contact_fk = create_contact(contact_payload)
+    contact_fk = contacts.create(contact_payload)
     organization_payload = {
         "description": answers['description'],
         "type": answers['type'],
@@ -125,11 +128,11 @@ def show_organization(organization: str, orgdata: dict, contactdata: dict, back:
         case "Type" | "Description":
             organization_value_menu(orgdata['id'], key.lower(), validator=validator.isNotNull)
         case "Name" | "Address":
-            contact_value_menu(orgdata['contact_fk'], key.lower(), validator=validator.isNotNull)
+            contacts.value_menu(orgdata['contact_fk'], key.lower(), validator=validator.isNotNull)
         case "Phone":
-            contact_value_menu(orgdata['contact_fk'], key.lower(), validator=validator.validate_phone)
+            contacts.value_menu(orgdata['contact_fk'], key.lower(), validator=validator.validate_phone)
         case "Email":
-            contact_value_menu(orgdata['contact_fk'], key.lower(), validator=validator.validate_email)
+            contacts.value_menu(orgdata['contact_fk'], key.lower(), validator=validator.validate_email)
         case "Website URL":
             organization_value_menu(orgdata['id'], 'url', validator=validator.validate_url)
     organization_menu()
