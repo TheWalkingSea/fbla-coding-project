@@ -1,3 +1,7 @@
+from utils import util, validator
+import db_handler
+import inquirer
+
 def organization_menu(contactNames: list[str]=None) -> None:
     """ Represents the organization interactive cli menu
      
@@ -5,8 +9,8 @@ def organization_menu(contactNames: list[str]=None) -> None:
     (list[str])contactNames: A list of contact names; Defaults to None and is retrieved from the server
       
     """
-    cls()
-    orgdata = get_all_organization_data()
+    util.cls()
+    orgdata = db_handler.get_all_data()
     contactdata = get_contacts_info(orgdata)
     contactNames = contactNames or get_contact_names(contactdata)
 
@@ -37,7 +41,7 @@ def organization_menu(contactNames: list[str]=None) -> None:
 
 def create_organization_menu():
     """ Creates an organization with a prompt """
-    cls()
+    util.cls()
     q = [
         inquirer.Text("name", "Name", validate=lambda _, x: validator.isNotNull(x)),
         inquirer.Text("type", "Type", validate=lambda _, x: validator.isNotNull(x)),
@@ -61,7 +65,7 @@ def create_organization_menu():
         "url": answers['url'],
         "contact_fk": contact_fk
     }
-    create_organization(organization_payload)
+    db_handler.create(organization_payload)
 
     
 
@@ -74,14 +78,14 @@ def organization_value_menu(organization_id: int, key: str, validator: Callable=
     (Callable)validator: A validation function that is optional but can be used to validate input
     
     """
-    cls()
+    util.cls()
     q = [
         inquirer.Text(name="key", message=key.capitalize(), validate=True if not validator else lambda _, current: validator(current)),
         inquirer.Confirm("confirmation", message="Name: {key}?")
     ]
     answers = inquirer.prompt(q)
     if (answers['confirmation']):
-        update_value_organization(organization_id, key, answers['key'])
+        db_handler.update_value(organization_id, key, answers['key'])
 
 def show_organization(organization: str, orgdata: dict, contactdata: dict, back: Callable=organization_menu) -> None:
     """ Represents the cli menu for an organization
@@ -93,7 +97,7 @@ def show_organization(organization: str, orgdata: dict, contactdata: dict, back:
     (Callable)back: A function representing where the program should go if the user selects back; Default: organization_menu
     
     """
-    cls()
+    util.cls()
     q = [
         inquirer.List("organization", message=organization, choices=[
             "Name: %s" % contactdata['name'],
@@ -113,7 +117,7 @@ def show_organization(organization: str, orgdata: dict, contactdata: dict, back:
         back()
         return
     elif (answer == "Delete"):
-        delete_organization(orgdata['id'])
+        db_handler.delete(orgdata['id'])
         back()
         return
     key = answer.split(":")[0]
