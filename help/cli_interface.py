@@ -27,7 +27,8 @@ def q_and_a_menu() -> None:
         "How often is my data backed up?": "Your data is backed up every 24 hours of the program's uptime.",
         "How do I backup my data?": "Your data is dynamically backed up by EduVision on your computer, so if any of your data was corrupted, then you can back it up with earlier versions of the database.",
         "Where are my backups located?": "Backups are located at /backups/ in the same folder as the program. This is to ensure that your backups are easily accessible at all times.",
-        "How do I rollback my database from a backup?": "Delete the old database and move the backup the same folder as the program and rename it to db.sqlite3. This is the file that EduVision pulls from."
+        "How do I rollback my database from a backup?": "Delete the old database and move the backup the same folder as the program and rename it to db.sqlite3. This is the file that EduVision pulls from.",
+        "Why does the CLI duplicate when I scroll": "Unfortunately due some problems with Windows, the CLI can bug out and cause duplicated lines when scrolling."
     }
     util.cls()
     q = [

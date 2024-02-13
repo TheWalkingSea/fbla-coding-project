@@ -1,1 +1,1 @@
-pyinstaller --path utils --paths ../venv/Lib/site-packages --hidden-import=charset_normalizer.cd --hidden-import=chardet --onefile main.py
+pyinstaller --paths ./venv/Lib/site-packages --hidden-import=charset_normalizer.cd --hidden-import=chardet --onefile main.py
