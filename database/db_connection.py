@@ -17,5 +17,5 @@ def create_connection(database_file: str) -> None:
         connection.row_factory = sqlite3.Row
         return connection
     except sqlite3.Error as e:
-        input(f"Error connecting to SQLite database: {e}")
+        input(f"Error connecting to SQLite database. Ensure that db.sqlite3 is in the same folder as main.exe")
         return None
