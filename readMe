@@ -1,13 +1,29 @@
 To execute the program, you must open the dist folder and run the main.exe program. If there are any visual bugs present when scrolling through the cli, try changing the resolution of the command prompt (Ex: fullscreen).
  - WARNING: The file may be flagged as a virus by Windows Defender. This is not true and has to do with the file not being signed by Microsoft and approved. The source code is provided and instructions on how to build the file are also provided. It is also not flagged on any other major antivirus, just has to do with how Microsoft verifies files (which can cost money).
- - The program is an interactive CLI. Use up and down arrows to navigate through the menu and use the ENTER key to navigate to the next page. You can select either an organization or a partner (A partner is someone who is part of an organization). 
-    - Selecting one of the two will bring a menu of a list of items with the ability to create an organization/partner and a BACK button at the bottom.
-    - You can also search/filter through items by selecting SEARCH and typing in a query. Pressing enter will filter through entries.
-    - Selecting one of the organizations/partners will bring up information stored about that entity, you can select an item to edit the item and a confirmation prompt will popup to confirm changes.
- - You can also select to create a report.
-    - This will export the data into a file called export.xlsx with information about organizations and the partners who work at that organization.
- - Selecting EXIT will exit the program
+ - NAVIGATION: The program is an interactive CLI. Use up and down arrows to navigate through the menu and use the ENTER key to navigate to the next page. On the main menu you can select the organization or partner menu
+    - INSPECT ORGANIZATION/PARTNER: Selecting organization/partner will bring a menu of a list of items. Selecting one of the items from the list will bring up specific info regarding that organization/partner.
+    - CREATE ORGANIZATION/PARTNER: Scroll to the bottom of the list to find the Create Organization/Partner button. Selecting it will bring a prompt to create an item.
+    - SEARCH/FILTER: You can also search/filter through items by selecting SEARCH in the menu and typing in a query. Pressing enter will filter through entries.
+    - UPDATE INFO: Selecting one of the organizations/partners will bring up information stored about that entity, you can select an item from the page to edit the item and a confirmation prompt will popup to confirm changes.
+ - CREATE REPORT: You can also select to create a report on the main menu.
+    - You will be prompted with different options on how to export the data. Selecting one will create a file named export.xlsx in the same folder as the program with a full analysis of partners and organizations.
+ - HELP: Selecting HELP will bring up two options:
+    - INSTRUCTIONS: Selecting this option will give basic instructions on how the program works.
+    - Q&A: This will bring up a prompt of Q&A Questions that can be used to help navigate the program.
+ - EXIT: Selecting EXIT will exit the program
 
-To build the program, you must have python and pyinstaller installed. You must the execute `pip install -r requirements.txt` in the prompt to install requirements. Then you must run build.bat and your program should be in /dist/main.exe
+BUILD PROGRAM:
+   1. Install python and select `ADD PYTHON 3.12 TO PATH` (https://www.python.org/ftp/python/3.12.2/python-3.12.2-amd64.exe)
+   2. Open a command prompt and navigate to the folder with the program (Placeholder for path to program is FOLDER/WITH/SOURCE/CODE) and execute the following:
+      ```
+      cd FOLDER/WITH/SOURCE/CODE
+      pip install pyinstaller
+      python -m venv ./venv
+      ./venv/Scripts/activate
+      pip install -r requirements.txt
+      ./build.bat
+      ```
+   3. The program will be exported to /dist/
+   4. Download db.sqlite3 to /dist/
 
 ** ENSURE THAT db.sqlite3 IS IN THE SAME FOLDER AS THE PROGRAM OR IT WILL BE UNABLE TO CONNECT TO THE DATABASE
